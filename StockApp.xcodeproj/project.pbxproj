@@ -9,16 +9,18 @@
 /* Begin PBXBuildFile section */
 		75E4F9252ADFBD4B002A59FF /* StockAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4F9242ADFBD4B002A59FF /* StockAppApp.swift */; };
 		75E4F9272ADFBD4B002A59FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4F9262ADFBD4B002A59FF /* ContentView.swift */; };
-		75E4F9292ADFBD4C002A59FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75E4F9282ADFBD4C002A59FF /* Assets.xcassets */; };
 		75E4F92C2ADFBD4C002A59FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75E4F92B2ADFBD4C002A59FF /* Preview Assets.xcassets */; };
+		75E4F9332ADFBE9A002A59FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75E4F9322ADFBE99002A59FF /* Assets.xcassets */; };
+		75E4F9382ADFBFC6002A59FF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4F9372ADFBFC6002A59FF /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		75E4F9212ADFBD4B002A59FF /* StockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75E4F9242ADFBD4B002A59FF /* StockAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAppApp.swift; sourceTree = "<group>"; };
 		75E4F9262ADFBD4B002A59FF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		75E4F9282ADFBD4C002A59FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75E4F92B2ADFBD4C002A59FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		75E4F9322ADFBE99002A59FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../Downloads/Resources/Assets.xcassets; sourceTree = "<group>"; };
+		75E4F9372ADFBFC6002A59FF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +55,8 @@
 			children = (
 				75E4F9242ADFBD4B002A59FF /* StockAppApp.swift */,
 				75E4F9262ADFBD4B002A59FF /* ContentView.swift */,
-				75E4F9282ADFBD4C002A59FF /* Assets.xcassets */,
+				75E4F9342ADFBF91002A59FF /* Extensions */,
+				75E4F9322ADFBE99002A59FF /* Assets.xcassets */,
 				75E4F92A2ADFBD4C002A59FF /* Preview Content */,
 			);
 			path = StockApp;
@@ -65,6 +68,14 @@
 				75E4F92B2ADFBD4C002A59FF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		75E4F9342ADFBF91002A59FF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				75E4F9372ADFBFC6002A59FF /* Color.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E4F92C2ADFBD4C002A59FF /* Preview Assets.xcassets in Resources */,
-				75E4F9292ADFBD4C002A59FF /* Assets.xcassets in Resources */,
+				75E4F9332ADFBE9A002A59FF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +150,7 @@
 			files = (
 				75E4F9272ADFBD4B002A59FF /* ContentView.swift in Sources */,
 				75E4F9252ADFBD4B002A59FF /* StockAppApp.swift in Sources */,
+				75E4F9382ADFBFC6002A59FF /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,11 +282,11 @@
 				DEVELOPMENT_TEAM = SY7MZGAN4N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crypto Tracker";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -282,6 +294,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = personalteam.StockApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -299,11 +314,11 @@
 				DEVELOPMENT_TEAM = SY7MZGAN4N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crypto Tracker";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,6 +326,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = personalteam.StockApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
