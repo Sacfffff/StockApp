@@ -11,7 +11,10 @@ import SwiftUI
 struct StockAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                HomeView()
+                    .toolbar(.hidden)
+            }
         }
     }
 }
