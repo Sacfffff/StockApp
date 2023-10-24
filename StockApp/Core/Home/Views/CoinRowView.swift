@@ -22,9 +22,16 @@ struct CoinRowView: View {
                 centerColumn
             }
             
-          rightColumn
+            rightColumn
         }
         .font(.subheadline)
+        .listRowSeparator(.visible, edges: .bottom)
+        .alignmentGuide(.listRowSeparatorLeading) { viewDimension in
+            return viewDimension[.listRowSeparatorLeading]
+        }
+        .alignmentGuide(.listRowSeparatorTrailing) { viewDimension in
+            return viewDimension[.trailing]
+        }
     }
 }
 
@@ -44,7 +51,7 @@ private extension CoinRowView {
     
     var leftColumn: some View {
         
-        return HStack(spacing: 0) {
+        HStack(spacing: 0) {
             Text("\(coin.rank)")
                 .font(.caption)
                 .foregroundColor(.theme.secondaryText)
@@ -61,7 +68,7 @@ private extension CoinRowView {
     
     var centerColumn: some View {
         
-        return VStack(alignment: .trailing) {
+        VStack(alignment: .trailing) {
             Text(coin.currentHoldingsValue.asCurrencyDecimals2)
                 .bold()
             Text((coin.currentHoldings ?? 0).asNumberString)
@@ -72,7 +79,7 @@ private extension CoinRowView {
     
     var rightColumn: some View {
         
-        return VStack(alignment: .trailing) {
+        VStack(alignment: .trailing) {
             Text(coin.currentPrice.asCurrencyDecimals6)
                 .bold()
                 .foregroundColor(.theme.tint)
