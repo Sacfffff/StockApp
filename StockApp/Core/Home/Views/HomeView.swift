@@ -78,7 +78,6 @@ private extension HomeView {
         
     }
     
-    
     var coinsList: some View {
         
         List {

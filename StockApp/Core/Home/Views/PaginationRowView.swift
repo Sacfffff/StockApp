@@ -20,14 +20,14 @@ struct PaginationRowView: View {
                 case .idle:
                     EmptyView()
                 case .error:
-                    fatalError()
+                    ErrorView()
             }
         }
         .listRowSeparatorTint(.clear)
         .frame(height: 50)
         .frame(maxWidth: .infinity)
         .onAppear {
-            //viewModel.loadMoreItems()
+            viewModel.getMoreModels()
         }
         
     }
