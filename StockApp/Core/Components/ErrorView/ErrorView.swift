@@ -16,17 +16,19 @@ struct ErrorView: View {
         VStack(spacing: 10) {
             Text("Oops... someting went wrong")
                 .font(.headline)
-                .foregroundColor(.theme.tint)
+                .foregroundColor(.theme.red)
             Button {
-                
+                viewModel.refreshModels()
             } label: {
-                Text("Please try again")
-                    .font(.subheadline)
-                Image(systemName: "repeat")
-                    .font(.subheadline)
+                HStack {
+                    Text("Please try again")
+                        .font(.subheadline)
+                    Image(systemName: "repeat")
+                        .font(.subheadline)
+                }
             }
         }
-        .foregroundColor(.theme.tint)
+        .foregroundColor(.gray)
         
     }
 }

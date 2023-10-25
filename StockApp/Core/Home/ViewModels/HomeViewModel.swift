@@ -75,10 +75,20 @@ class HomeViewModel: ObservableObject {
 extension HomeViewModel {
     
     func getMoreModels() {
+        
         dataService.getMoreCoins()
+        
+    }
+    
+    
+    func refreshModels() {
+        
+        dataService.performUpdate()
+        
     }
     
 }
+
 
 extension HomeViewModel {
     

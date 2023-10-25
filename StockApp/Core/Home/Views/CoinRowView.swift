@@ -25,7 +25,6 @@ struct CoinRowView: View {
             rightColumn
         }
         .font(.subheadline)
-        .listRowSeparator(.visible, edges: .bottom)
         .alignmentGuide(.listRowSeparatorLeading) { viewDimension in
             return viewDimension[.listRowSeparatorLeading]
         }
