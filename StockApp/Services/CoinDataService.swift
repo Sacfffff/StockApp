@@ -19,6 +19,7 @@ class CoinDataService {
     private var numberOfItemsToLoadPerPage: Int = 250
     
     private var coinSubscription: AnyCancellable? = nil
+    private let localDataManager = LocalNetworkingManager.shared
     
     init() {
         performFetchCoins()
@@ -31,23 +32,21 @@ class CoinDataService {
         
         if !isLoading, hasMoreResults, error == nil {
             isLoading = true
-            
-           coinSubscription = URLSession.shared.dataTaskPublisher(for: url)
-                .subscribe(on: DispatchQueue.global(qos: .default))
-                .tryMap { output in
-                    guard let responce = output.response as? HTTPURLResponse, 200...299 ~= responce.statusCode else {
-                        throw URLError.init(.badServerResponse)
-                    }
-                    return output.data
-                }
-                .receive(on: DispatchQueue.main)
+
+            coinSubscription = NetworkingManager.download(url: url)
                 .decode(type: [CoinModel].self, decoder: JSONDecoder())
                 .sink { [weak self] completion in
-                    if case .failure(let error) = completion {
-                        self?.modelsDidLoad(error: error)
+                     if case .failure(let error) = completion {
+                         let localCoins: [CoinModel]? = self?.localDataManager.read()
+                         if let localCoins {
+                             self?.modelsDidLoad(coins: localCoins)
+                         } else {
+                             self?.modelsDidLoad(error: error)
+                         }
                     }
                 } receiveValue: { [weak self] coins in
                     self?.modelsDidLoad(coins: coins)
+                    self?.localDataManager.write(array: coins)
                 }
         }
         

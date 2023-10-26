@@ -58,6 +58,7 @@ class HomeViewModel: ObservableObject {
         if dataService.allCoins.isEmpty {
             if let error = dataService.error {
                 paginationState = .error(error)
+                print(error.localizedDescription)
             } else if dataService.hasMoreResults == false {
                 paginationState = .idle
             } else {

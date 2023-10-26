@@ -28,7 +28,7 @@ struct ErrorView: View {
                 }
             }
         }
-        .foregroundColor(.gray)
+        .foregroundColor(.theme.tint)
         
     }
 }
