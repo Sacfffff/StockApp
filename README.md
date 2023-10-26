@@ -5,3 +5,4 @@ Full featured IOS App showcasing Crypto API.
 - Using MVVM;
 - RestAPI;
 - Pagination available;
+- Local JSONManager;
