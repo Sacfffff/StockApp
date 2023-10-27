@@ -24,12 +24,13 @@ struct CoinRowView: View {
             
             rightColumn
         }
+        .frame(minHeight: 40)
         .font(.subheadline)
         .alignmentGuide(.listRowSeparatorLeading) { viewDimension in
-            return viewDimension[.listRowSeparatorLeading]
+            return viewDimension[.leading] + 8
         }
         .alignmentGuide(.listRowSeparatorTrailing) { viewDimension in
-            return viewDimension[.trailing]
+            return viewDimension[.trailing] - 8
         }
     }
 }
@@ -51,11 +52,9 @@ private extension CoinRowView {
     var leftColumn: some View {
         
         HStack(spacing: 0) {
-            Text("\(coin.rank)")
-                .font(.caption)
-                .foregroundColor(.theme.secondaryText)
-                .frame(minWidth: 30)
-            Circle()
+            Text("")
+                .frame(width: 6)
+            CoinImageView(coin: coin)
                 .frame(width: 30, height: 30)
             Text(coin.symbol.uppercased())
                 .font(.headline)

@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		75530F162AEA3DD4008C7724 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F152AEA3DD4008C7724 /* NetworkingManager.swift */; };
 		75530F192AEA49D6008C7724 /* LocalNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F182AEA49D6008C7724 /* LocalNetworkingManager.swift */; };
+		75530F1C2AEB9240008C7724 /* CoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F1B2AEB9240008C7724 /* CoinImageView.swift */; };
 		755A15082AE6399100A630CB /* CoinRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755A15072AE6399100A630CB /* CoinRowView.swift */; };
 		755A150A2AE639F300A630CB /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755A15092AE639F300A630CB /* PreviewProvider.swift */; };
 		755A150C2AE6593B00A630CB /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755A150B2AE6593B00A630CB /* Double.swift */; };
 		755A150E2AE7988300A630CB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755A150D2AE7988300A630CB /* HomeViewModel.swift */; };
 		755A15102AE79D5800A630CB /* PaginationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755A150F2AE79D5800A630CB /* PaginationRowView.swift */; };
+		756F1B242AEB964C0042F2C6 /* CoinImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F1B232AEB964C0042F2C6 /* CoinImageService.swift */; };
+		756F1B272AEB9A9A0042F2C6 /* CoinImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F1B262AEB9A9A0042F2C6 /* CoinImageViewModel.swift */; };
 		75A412B82AE8FB140003E6CC /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A412B72AE8FB140003E6CC /* CoinDataService.swift */; };
 		75A412BB2AE9133F0003E6CC /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A412BA2AE9133F0003E6CC /* ErrorView.swift */; };
 		75E4F9252ADFBD4B002A59FF /* StockAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4F9242ADFBD4B002A59FF /* StockAppApp.swift */; };
@@ -29,11 +32,14 @@
 /* Begin PBXFileReference section */
 		75530F152AEA3DD4008C7724 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		75530F182AEA49D6008C7724 /* LocalNetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkingManager.swift; sourceTree = "<group>"; };
+		75530F1B2AEB9240008C7724 /* CoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageView.swift; sourceTree = "<group>"; };
 		755A15072AE6399100A630CB /* CoinRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRowView.swift; sourceTree = "<group>"; };
 		755A15092AE639F300A630CB /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		755A150B2AE6593B00A630CB /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		755A150D2AE7988300A630CB /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		755A150F2AE79D5800A630CB /* PaginationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationRowView.swift; sourceTree = "<group>"; };
+		756F1B232AEB964C0042F2C6 /* CoinImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageService.swift; sourceTree = "<group>"; };
+		756F1B262AEB9A9A0042F2C6 /* CoinImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageViewModel.swift; sourceTree = "<group>"; };
 		75A412B72AE8FB140003E6CC /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
 		75A412BA2AE9133F0003E6CC /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		75E4F9212ADFBD4B002A59FF /* StockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,10 +80,28 @@
 			path = LocalJson;
 			sourceTree = "<group>";
 		};
+		75530F1A2AEB9229008C7724 /* CoinImage */ = {
+			isa = PBXGroup;
+			children = (
+				756F1B252AEB9A830042F2C6 /* ViewModel */,
+				75530F1B2AEB9240008C7724 /* CoinImageView.swift */,
+			);
+			path = CoinImage;
+			sourceTree = "<group>";
+		};
+		756F1B252AEB9A830042F2C6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				756F1B262AEB9A9A0042F2C6 /* CoinImageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		75A412B62AE8FAE50003E6CC /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				75A412B72AE8FB140003E6CC /* CoinDataService.swift */,
+				756F1B232AEB964C0042F2C6 /* CoinImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -179,6 +203,7 @@
 		75E4F93F2AE10217002A59FF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				75530F1A2AEB9229008C7724 /* CoinImage */,
 				75A412B92AE9132A0003E6CC /* ErrorView */,
 				75E4F9402AE10408002A59FF /* CircleButton */,
 			);
@@ -277,8 +302,11 @@
 				75E4F9252ADFBD4B002A59FF /* StockAppApp.swift in Sources */,
 				75E4F9442AE10959002A59FF /* CircleButtonAnimationView.swift in Sources */,
 				755A150E2AE7988300A630CB /* HomeViewModel.swift in Sources */,
+				75530F1C2AEB9240008C7724 /* CoinImageView.swift in Sources */,
 				75E4F9422AE1041A002A59FF /* CircleButtonView.swift in Sources */,
+				756F1B242AEB964C0042F2C6 /* CoinImageService.swift in Sources */,
 				755A15102AE79D5800A630CB /* PaginationRowView.swift in Sources */,
+				756F1B272AEB9A9A0042F2C6 /* CoinImageViewModel.swift in Sources */,
 				75E4F9472AE15E4E002A59FF /* CoinModel.swift in Sources */,
 				75530F192AEA49D6008C7724 /* LocalNetworkingManager.swift in Sources */,
 				755A150A2AE639F300A630CB /* PreviewProvider.swift in Sources */,

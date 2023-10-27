@@ -83,12 +83,13 @@ private extension HomeView {
         List {
             ForEach(viewModel.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: false)
-                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
             }
             if viewModel.hasMoreResults {
                 PaginationRowView()
             }
         }
+        .scrollIndicators(.hidden)
         .listStyle(.plain)
         
     }
@@ -101,6 +102,7 @@ private extension HomeView {
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
             }
         }
+        .scrollIndicators(.hidden)
         .listStyle(.plain)
         
     }

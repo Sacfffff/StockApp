@@ -16,9 +16,9 @@ struct PaginationRowView: View {
         ZStack {
             switch viewModel.paginationState {
                 case .loading:
-                    ProgressView()
+                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
                 case .idle:
-                    EmptyView()
+                   EmptyView()
                 case .error:
                     ErrorView()
             }
@@ -40,4 +40,31 @@ struct PaginationRow_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
             .environmentObject(dev.homeViewModel)
     }
+}
+
+// progressView temp fix
+fileprivate extension PaginationRowView {
+    
+    struct ActivityIndicator: UIViewRepresentable {
+        
+        @Binding var isAnimating: Bool
+        
+        let style: UIActivityIndicatorView.Style
+        
+        
+        func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+            
+            return UIActivityIndicatorView(style: style)
+            
+        }
+        
+        
+        func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
+            
+            isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
+            
+        }
+        
+    }
+    
 }

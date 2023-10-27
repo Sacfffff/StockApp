@@ -16,7 +16,7 @@ class CoinDataService {
     
     private var isLoading: Bool = false
     private var page: Int = 1
-    private var numberOfItemsToLoadPerPage: Int = 250
+    private let numberOfItemsToLoadPerPage: Int = 250
     
     private var coinSubscription: AnyCancellable? = nil
     private let localDataManager = LocalNetworkingManager.shared
@@ -32,36 +32,40 @@ class CoinDataService {
         
         if !isLoading, hasMoreResults, error == nil {
             isLoading = true
-
+            
+            let initialModelsLoading: Bool = page == 1
             coinSubscription = NetworkingManager.download(url: url)
                 .decode(type: [CoinModel].self, decoder: JSONDecoder())
                 .sink { [weak self] completion in
-                     if case .failure(let error) = completion {
-                         let localCoins: [CoinModel]? = self?.localDataManager.read()
-                         if let localCoins {
-                             self?.modelsDidLoad(coins: localCoins)
-                         } else {
-                             self?.modelsDidLoad(error: error)
-                         }
+                    if case .failure(let error) = completion {
+                        let localCoins: [CoinModel]? = self?.localDataManager.read()
+                        if initialModelsLoading, let localCoins {
+                            self?.modelsDidLoad(coins: localCoins, isLocalModels: true)
+                        } else {
+                            self?.modelsDidLoad(error: error)
+                        }
                     }
                 } receiveValue: { [weak self] coins in
                     self?.modelsDidLoad(coins: coins)
-                    self?.localDataManager.write(array: coins)
+                    if initialModelsLoading {
+                        self?.localDataManager.write(array: coins)
+                    }
+                    self?.coinSubscription?.cancel()
                 }
         }
         
     }
     
     
-    private func modelsDidLoad(coins: [CoinModel]? = nil, error: Error? = nil) {
+    private func modelsDidLoad(coins: [CoinModel]? = nil, error: Error? = nil, isLocalModels: Bool = false) {
         
         if let error {
             allCoins = []
             self.error = error
         } else if let coins {
-            page += 1
-            hasMoreResults = false//!coins.isEmpty
             allCoins = coins
+            page = isLocalModels ? page : page + 1
+            hasMoreResults = !coins.isEmpty && !isLocalModels
         }
         
         isLoading = false
