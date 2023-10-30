@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7515315C2AEF73E4008CDDF5 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7515315B2AEF73E4008CDDF5 /* LocalFileManager.swift */; };
 		75530F162AEA3DD4008C7724 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F152AEA3DD4008C7724 /* NetworkingManager.swift */; };
 		75530F192AEA49D6008C7724 /* LocalNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F182AEA49D6008C7724 /* LocalNetworkingManager.swift */; };
 		75530F1C2AEB9240008C7724 /* CoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75530F1B2AEB9240008C7724 /* CoinImageView.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7515315B2AEF73E4008CDDF5 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		75530F152AEA3DD4008C7724 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		75530F182AEA49D6008C7724 /* LocalNetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkingManager.swift; sourceTree = "<group>"; };
 		75530F1B2AEB9240008C7724 /* CoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				75530F152AEA3DD4008C7724 /* NetworkingManager.swift */,
+				7515315B2AEF73E4008CDDF5 /* LocalFileManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				75E4F9442AE10959002A59FF /* CircleButtonAnimationView.swift in Sources */,
 				755A150E2AE7988300A630CB /* HomeViewModel.swift in Sources */,
 				75530F1C2AEB9240008C7724 /* CoinImageView.swift in Sources */,
+				7515315C2AEF73E4008CDDF5 /* LocalFileManager.swift in Sources */,
 				75E4F9422AE1041A002A59FF /* CircleButtonView.swift in Sources */,
 				756F1B242AEB964C0042F2C6 /* CoinImageService.swift in Sources */,
 				755A15102AE79D5800A630CB /* PaginationRowView.swift in Sources */,
