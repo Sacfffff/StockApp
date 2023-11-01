@@ -65,7 +65,7 @@ class CoinDataService {
         } else if let coins {
             allCoins = coins
             page = isLocalModels ? page : page + 1
-            hasMoreResults = !coins.isEmpty && !isLocalModels
+            hasMoreResults = false//!coins.isEmpty && !isLocalModels
         }
         
         isLoading = false

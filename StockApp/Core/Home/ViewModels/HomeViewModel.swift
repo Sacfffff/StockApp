@@ -52,6 +52,18 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancelBag)
         
+        $searchText
+            .combineLatest(dataService.$allCoins)
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .map({ text, coins in
+                guard !text.isEmpty else { return coins }
+                return coins.filterCoins(by: text.lowercased())
+            })
+            .sink { [weak self] coins in
+                self?.allCoins = coins
+            }
+            .store(in: &cancelBag)
+        
     }
     
     
@@ -115,6 +127,15 @@ fileprivate extension Array where Element == CoinModel {
                 partialResult.append(coin)
             }
         })
+        
+    }
+    
+    
+    func filterCoins(by text: String) -> [CoinModel] {
+        
+        return self.filter{ $0.name.lowercased().contains(text) ||
+            $0.symbol.lowercased().contains(text) ||
+            $0.id.lowercased().contains(text)}
         
     }
     
