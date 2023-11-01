@@ -18,7 +18,6 @@ struct PaginationRowView: View {
                 case .loading:
                     ActivityIndicator(isAnimating: .constant(true), style: .medium)
                 case .idle:
-                   EmptyView()
                 case .error:
                     ErrorView()
             }
