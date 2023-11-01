@@ -12,6 +12,7 @@ class HomeViewModel: ObservableObject {
     
     @Published var allCoins: [CoinModel] = []
     @Published var portfolioCoins: [CoinModel] = []
+    @Published var filteredCoins: [CoinModel] = []
     
     @Published var searchText: String = ""
     
@@ -53,14 +54,13 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancelBag)
         
         $searchText
-            .combineLatest(dataService.$allCoins)
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .map({ text, coins in
-                guard !text.isEmpty else { return coins }
-                return coins.filterCoins(by: text.lowercased())
-            })
-            .sink { [weak self] coins in
-                self?.allCoins = coins
+            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .sink { [weak self] text in
+                guard !text.isEmpty else {
+                    self?.filteredCoins = []
+                    return
+                }
+                self?.filteredCoins = self?.allCoins.filterCoins(by: text.lowercased()) ?? []
             }
             .store(in: &cancelBag)
         
