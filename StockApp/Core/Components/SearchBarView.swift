@@ -14,15 +14,15 @@ struct SearchBarView: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(searchText.isEmpty ? .theme.secondaryText : .theme.tint)
+                .foregroundStyle(searchText.isEmpty ? Color.theme.secondaryText : Color.theme.tint)
             
             TextField("Search by name or symbol...", text: $searchText)
-                .foregroundColor(.theme.tint)
+                .foregroundStyle(Color.theme.tint)
                 .autocorrectionDisabled()
                 .keyboardType(.alphabet)
             
             Image(systemName: "xmark.circle.fill")
-                .foregroundColor(.theme.tint)
+                .foregroundStyle(Color.theme.tint)
                 .opacity(searchText.isEmpty ? 0.0 : 1.0)
                 .onTapGesture {
                     UIApplication.shared.endEditing()

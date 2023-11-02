@@ -59,7 +59,7 @@ private extension CoinRowView {
             Text(coin.symbol.uppercased())
                 .font(.headline)
                 .padding(.leading, 6)
-                .foregroundColor(.theme.tint)
+                .foregroundStyle(Color.theme.tint)
         }
         
     }
@@ -71,7 +71,7 @@ private extension CoinRowView {
                 .bold()
             Text((coin.currentHoldings ?? 0).asNumberString)
         }
-        .foregroundColor(.theme.tint)
+        .foregroundStyle(Color.theme.tint)
         
     }
     
@@ -80,9 +80,9 @@ private extension CoinRowView {
         VStack(alignment: .trailing) {
             Text(coin.currentPrice.asCurrencyDecimals6)
                 .bold()
-                .foregroundColor(.theme.tint)
+                .foregroundStyle(Color.theme.tint)
             Text(coin.priceChangePercentage24H?.asPercentString ?? "")
-                .foregroundColor((coin.priceChangePercentage24H ?? 0) >= 0 ? .theme.green : .theme.red)
+                .foregroundStyle((coin.priceChangePercentage24H ?? 0) >= 0 ? Color.theme.green : Color.theme.red)
         }
         .padding(.trailing, 6)
         .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)

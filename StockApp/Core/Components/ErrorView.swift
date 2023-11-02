@@ -16,7 +16,7 @@ struct ErrorView: View {
             VStack(spacing: 10) {
                 Text("Oops... someting went wrong")
                     .font(.headline)
-                    .foregroundColor(.theme.red)
+                    .foregroundStyle(Color.theme.red)
                 Button {
                     viewModel.refreshModels()
                 } label: {
@@ -28,7 +28,7 @@ struct ErrorView: View {
                     }
                 }
             }
-            .foregroundColor(.theme.tint)
+            .foregroundStyle(Color.theme.tint)
         
         }
     

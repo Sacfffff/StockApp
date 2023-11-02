@@ -224,4 +224,8 @@ class DeveloperPreview {
        ]),
        currentHoldings: 1.5)
     
+    let statOne = StatisticModel(title: "Market Cap", value: "$12.58n", percentageChange: 25.34)
+    let statTwo = StatisticModel(title: "Total Volume", value: "$1.23Tr")
+    let statThree = StatisticModel(title: "Portfolio Value", value: "$58.4k", percentageChange: -12.30)
+    
 }

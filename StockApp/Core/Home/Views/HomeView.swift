@@ -19,7 +19,7 @@ struct HomeView: View {
             
             VStack {
                 homeHeader
-                
+                HomeStatsView(showPortfolio: $showPortfolio)
                 SearchBarView(searchText: $viewModel.searchText)
                 
                 columnTitles
@@ -65,7 +65,7 @@ private extension HomeView {
             Text(showPortfolio ? "Portfolio" : "Live Prices")
                 .font(.headline)
                 .fontWeight(.heavy)
-                .foregroundColor(.theme.tint)
+                .foregroundStyle(Color.theme.tint)
                 .animation(.none)
             Spacer()
             CircleButtonView(iconName: "chevron.right")
@@ -121,7 +121,7 @@ private extension HomeView {
                 .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
         }
         .font(.caption)
-        .foregroundColor(.theme.secondaryText)
+        .foregroundStyle(Color.theme.secondaryText)
         .padding(.horizontal)
         
     }
