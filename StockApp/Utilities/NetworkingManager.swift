@@ -50,6 +50,7 @@ class NetworkingManager {
         guard let responce = output.response as? HTTPURLResponse, 200...299 ~= responce.statusCode else {
             throw NetworkingError.badUrlResponce(url: output.response.url)
         }
+        
         return output.data
         
     }

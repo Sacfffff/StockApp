@@ -38,7 +38,7 @@ class CoinDataService {
                 .decode(type: [CoinModel].self, decoder: JSONDecoder())
                 .sink { [weak self] completion in
                     if case .failure(let error) = completion {
-                        let localCoins: [CoinModel]? = self?.localDataManager.read()
+                        let localCoins: [CoinModel]? = self?.localDataManager.read(from: .coinModels)
                         if initialModelsLoading, let localCoins {
                             self?.modelsDidLoad(coins: localCoins, isLocalModels: true)
                         } else {
@@ -48,7 +48,7 @@ class CoinDataService {
                 } receiveValue: { [weak self] coins in
                     self?.modelsDidLoad(coins: coins)
                     if initialModelsLoading {
-                        self?.localDataManager.write(array: coins)
+                        self?.localDataManager.write(data: coins, to: .coinModels)
                     }
                     self?.coinSubscription?.cancel()
                 }
