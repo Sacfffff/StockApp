@@ -8,10 +8,9 @@
 import SwiftUI
 import Combine
 
-@Observable
-class CoinImageService {
+class CoinImageService: ObservableObject {
     
-    var image: UIImage? = nil
+    @Published var image: UIImage? = nil
     
     private var imageSubscription: AnyCancellable? = nil
     private let fileManager = LocalFileManager.shared

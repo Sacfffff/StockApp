@@ -30,7 +30,13 @@ private extension CoinImageViewModel {
     
     func setup() {
         
-        self.image = dataService.image
+        dataService.$image
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                self?.image = image
+                self?.isLoading = false
+            }
+            .store(in: &cancelBag)
         
     }
     

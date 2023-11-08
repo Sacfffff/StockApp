@@ -12,6 +12,13 @@ struct StockAppApp: App {
     
     @StateObject private var viewModel = HomeViewModel()
     
+    init() {
+        
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.theme.tint)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.tint)]
+        
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack {
