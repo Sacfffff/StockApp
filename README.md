@@ -7,3 +7,4 @@ Full featured IOS App showcasing Crypto API.
 - Pagination available;
 - Local JSONManager;
 - Local Image cache;
+- Using Swift Data;
