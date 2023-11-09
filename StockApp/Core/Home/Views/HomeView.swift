@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
+    
+    @Query private var savedPortfolios: [PortfolioEntity]
     
     @EnvironmentObject private var viewModel: HomeViewModel
     @State private var showPortfolio: Bool = false
@@ -110,7 +113,7 @@ private extension HomeView {
     var portfolioCoinsList: some View {
         
         List {
-            ForEach(viewModel.portfolioCoins) { coin in
+            ForEach(viewModel.getCoinModels(from: savedPortfolios)) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: true)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
             }

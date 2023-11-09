@@ -13,7 +13,6 @@ class HomeViewModel: ObservableObject {
     @Published var statistics: [StatisticModel] = []
     
     @Published var allCoins: [CoinModel] = []
-    @Published var portfolioCoins: [CoinModel] = []
     @Published var filteredCoins: [CoinModel] = []
     
     @Published var searchText: String = ""
@@ -112,6 +111,17 @@ extension HomeViewModel {
         
     }
     
+    
+    func getCoinModels(from entyties: [PortfolioEntity]) -> [CoinModel] {
+        
+        if !filteredCoins.isEmpty {
+            return filteredCoins.getCoinModelsFilteredAndUpdated(by: entyties)
+        } else {
+            return allCoins.getCoinModelsFilteredAndUpdated(by: entyties)
+        }
+        
+    }
+    
 }
 
 
@@ -148,6 +158,18 @@ fileprivate extension Array where Element == CoinModel {
             $0.id.lowercased().contains(text)}
         
     }
+    
+    
+    func getCoinModelsFilteredAndUpdated(by entities: [PortfolioEntity]) -> [CoinModel] {
+        
+        return self.reduce(into: [], { partialResult, model in
+            if let entity = entities.first(where: { $0.coinId == model.id }) {
+                partialResult.append(model.updateHoldings(amount: entity.amount))
+            }
+        })
+        
+    }
+    
     
 }
 

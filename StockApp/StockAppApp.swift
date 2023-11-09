@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct StockAppApp: App {
@@ -27,5 +28,6 @@ struct StockAppApp: App {
             }
             .environmentObject(viewModel)
         }
+        .modelContainer(for: PortfolioEntity.self)
     }
 }

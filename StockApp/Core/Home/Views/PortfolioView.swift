@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PortfolioView: View {
 
+    @Environment(\.modelContext) private var modelContex
+    @Query private var savedPortfolios: [PortfolioEntity]
+    
     @EnvironmentObject private var viewModel: HomeViewModel
     @State private var selectedCoin: CoinModel? = nil
     @State private var quantityText: String = ""
@@ -26,7 +30,6 @@ struct PortfolioView: View {
                         portfolioInputSection
                     }
                 }
-                .navigationTitle("Edit Portfolio")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         XMarkButton()
@@ -37,6 +40,12 @@ struct PortfolioView: View {
                     }
             }
                 
+            }
+            .navigationTitle("Edit Portfolio")
+            .onChange(of: viewModel.searchText) {
+                if viewModel.searchText == "" {
+                    removeSelectedCoin()
+                }
             }
             
         }
@@ -59,7 +68,9 @@ private extension PortfolioView {
     
     func saveButtonPressed() {
         
-        guard let selectedCoin else { return }
+        guard let selectedCoin, let amount = Double(quantityText) else { return }
+        
+        self.updatePortfolio(coin: selectedCoin, amount: amount)
         
         withAnimation(.easeIn) {
             showCheckmark = true
@@ -85,18 +96,31 @@ private extension PortfolioView {
     }
     
     
+    func updateSelectedCoin(coin: CoinModel) {
+        
+        selectedCoin = coin
+        
+        if let currentAmount = savedPortfolios.first(where: { $0.coinId == coin.id })?.amount {
+            quantityText = "\(currentAmount)"
+        } else {
+            quantityText = ""
+        }
+        
+    }
+    
+    
     var coinLogoList: some View {
         
         ScrollView(.horizontal, showsIndicators: false) {
             
             LazyHStack(alignment: .top, spacing: 10) {
-                ForEach(viewModel.searchText.isEmpty ? viewModel.allCoins : viewModel.filteredCoins) { coin in
+                ForEach(viewModel.searchText.isEmpty ? viewModel.getCoinModels(from: savedPortfolios) : viewModel.filteredCoins) { coin in
                     CoinLogoView(coin: coin)
                         .frame(width: 75)
                         .padding(6)
                         .onTapGesture {
                             withAnimation(.easeIn) {
-                                selectedCoin = coin
+                                updateSelectedCoin(coin: coin)
                             }
                         }
                         .background(
@@ -166,7 +190,37 @@ private extension PortfolioView {
     
 }
 
+//MARK: - SwiftData
+
+private extension PortfolioView {
+    
+    func updatePortfolio(coin: CoinModel, amount: Double) {
+        
+        if let entity = savedPortfolios.first(where: { $0.coinId == coin.id }) {
+            if amount > 0 {
+                entity.amount = amount
+            } else {
+                modelContex.delete(entity)
+            }
+        } else {
+            insert(model: coin, amount: amount)
+        }
+    
+    }
+    
+    
+    func insert(model: CoinModel, amount: Double) {
+        
+        let entity = PortfolioEntity(coinId: model.id, amount: amount)
+        modelContex.insert(entity)
+        
+    }
+    
+    
+}
+
 #Preview {
     PortfolioView()
         .environmentObject(DeveloperPreview.instance.homeViewModel)
 }
+
