@@ -9,14 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct PortfolioView: View {
-
-    @Environment(\.modelContext) private var modelContex
-    @Query private var savedPortfolios: [PortfolioEntity]
     
     @EnvironmentObject private var viewModel: HomeViewModel
     @State private var selectedCoin: CoinModel? = nil
     @State private var quantityText: String = ""
     @State private var showCheckmark: Bool = false
+    
     
     var body: some View {
         
@@ -70,7 +68,7 @@ private extension PortfolioView {
         
         guard let selectedCoin, let amount = Double(quantityText) else { return }
         
-        self.updatePortfolio(coin: selectedCoin, amount: amount)
+        viewModel.updatePortfolio(coin: selectedCoin, amount: amount)
         
         withAnimation(.easeIn) {
             showCheckmark = true
@@ -100,7 +98,7 @@ private extension PortfolioView {
         
         selectedCoin = coin
         
-        if let currentAmount = savedPortfolios.first(where: { $0.coinId == coin.id })?.amount {
+        if let currentAmount = viewModel.savedPortfolios.first(where: { $0.id == coin.id })?.currentHoldings {
             quantityText = "\(currentAmount)"
         } else {
             quantityText = ""
@@ -114,7 +112,7 @@ private extension PortfolioView {
         ScrollView(.horizontal, showsIndicators: false) {
             
             LazyHStack(alignment: .top, spacing: 10) {
-                ForEach(viewModel.searchText.isEmpty ? viewModel.getCoinModels(from: savedPortfolios) : viewModel.filteredCoins) { coin in
+                ForEach(viewModel.searchText.isEmpty ? viewModel.savedPortfolios : viewModel.filteredCoins) { coin in
                     CoinLogoView(coin: coin)
                         .frame(width: 75)
                         .padding(6)
@@ -187,35 +185,6 @@ private extension PortfolioView {
         .font(.headline)
         
     }
-    
-}
-
-//MARK: - SwiftData
-
-private extension PortfolioView {
-    
-    func updatePortfolio(coin: CoinModel, amount: Double) {
-        
-        if let entity = savedPortfolios.first(where: { $0.coinId == coin.id }) {
-            if amount > 0 {
-                entity.amount = amount
-            } else {
-                modelContex.delete(entity)
-            }
-        } else {
-            insert(model: coin, amount: amount)
-        }
-    
-    }
-    
-    
-    func insert(model: CoinModel, amount: Double) {
-        
-        let entity = PortfolioEntity(coinId: model.id, amount: amount)
-        modelContex.insert(entity)
-        
-    }
-    
     
 }
 

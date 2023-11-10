@@ -11,9 +11,18 @@ import SwiftData
 @main
 struct StockAppApp: App {
     
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel: HomeViewModel
+    private let container: ModelContainer
     
     init() {
+        
+        do {
+            container = try ModelContainer(for: PortfolioEntity.self)
+            let viewModel = HomeViewModel(modelContext: container.mainContext)
+            _viewModel = .init(wrappedValue: viewModel)
+        } catch {
+            fatalError("Failed to create ModelContainer for Portfolio.")
+        }
         
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.theme.tint)]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.tint)]
@@ -28,6 +37,7 @@ struct StockAppApp: App {
             }
             .environmentObject(viewModel)
         }
-        .modelContainer(for: PortfolioEntity.self)
+        .modelContainer(container)
     }
+    
 }

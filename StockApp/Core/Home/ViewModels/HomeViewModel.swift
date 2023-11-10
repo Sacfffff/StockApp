@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftData
 
 class HomeViewModel: ObservableObject {
     
@@ -20,13 +21,18 @@ class HomeViewModel: ObservableObject {
     @Published var paginationState: PaginationState = .loading
     @Published var hasMoreResults: Bool = true
     
+    @Published var savedPortfolios: [CoinModel] = []
+    
+    private let portfolioDataService: PortfolioDataService
+    
     private var cancelBag: Set<AnyCancellable> = []
     
     private var coinDataService = CoinDataService()
     private var marketDataService = MarketDataService()
     
-    init() {
+    init(modelContext: ModelContext) {
         
+        self.portfolioDataService = PortfolioDataService(modelContext: modelContext)
         setup()
         
     }
@@ -66,10 +72,25 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancelBag)
         
+        $allCoins
+            .combineLatest(portfolioDataService.$portfolioEntities, $filteredCoins)
+            .map{ allCoins, portfolioEntities, filteredCoins in
+                if !filteredCoins.isEmpty {
+                    return filteredCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
+                } else {
+                    return allCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
+                }
+            }
+            .sink { [weak self] savedPortfolios in
+                self?.savedPortfolios = savedPortfolios
+            }
+            .store(in: &cancelBag)
+        
         marketDataService.$marketData
+            .combineLatest($savedPortfolios)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] marketData in
-                self?.statistics = marketData?.asStatisticModels ?? []
+            .sink { [weak self] marketData, portfolioCoins in
+                self?.statistics = marketData?.getStatisticModels(with: portfolioCoins) ?? []
             }
             .store(in: &cancelBag)
         
@@ -79,17 +100,27 @@ class HomeViewModel: ObservableObject {
     private func updateState() {
         
         if coinDataService.allCoins.isEmpty {
-            if let error = coinDataService.error {
-                paginationState = .error(error)
-                print(error.localizedDescription)
-            } else if coinDataService.hasMoreResults == false {
-                paginationState = .idle
-            } else {
-                paginationState = .loading
-            }
+            paginationState = updatePaginationState()
         } else {
-            allCoins.merge(newModel: coinDataService.allCoins)
+            allCoins = coinDataService.allCoins
+            paginationState = updatePaginationState()
         }
+        
+    }
+    
+    
+    private func updatePaginationState() -> PaginationState {
+        
+        var result: PaginationState = .loading
+        
+        if let error = coinDataService.error {
+            result = .error(error)
+            print(error.localizedDescription)
+        } else if coinDataService.hasMoreResults == false {
+            result = .idle
+        }
+        
+        return result
         
     }
     
@@ -112,13 +143,17 @@ extension HomeViewModel {
     }
     
     
-    func getCoinModels(from entyties: [PortfolioEntity]) -> [CoinModel] {
+    func updatePortfolio(coin: CoinModel, amount: Double) {
         
-        if !filteredCoins.isEmpty {
-            return filteredCoins.getCoinModelsFilteredAndUpdated(by: entyties)
-        } else {
-            return allCoins.getCoinModelsFilteredAndUpdated(by: entyties)
-        }
+        portfolioDataService.updatePortfolio(coin: coin, amount: amount)
+    
+    }
+    
+    
+    func reloadData() {
+        
+        coinDataService.performUpdate(forceReload: true)
+        marketDataService.performFetchMarketData()
         
     }
     
@@ -139,17 +174,6 @@ extension HomeViewModel {
 
 
 fileprivate extension Array where Element == CoinModel {
-    
-    mutating func merge(newModel: [CoinModel]) {
-      
-        self.append(contentsOf: newModel.reduce(into: []) { partialResult, coin in
-            if !self.contains(where: { coin.id == $0.id }) {
-                partialResult.append(coin)
-            }
-        })
-        
-    }
-    
     
     func filterCoins(by text: String) -> [CoinModel] {
         
@@ -175,13 +199,23 @@ fileprivate extension Array where Element == CoinModel {
 
 fileprivate extension MarketDataModel {
     
-    var asStatisticModels: [StatisticModel] {
+    func getStatisticModels(with portfolioCoins: [CoinModel]) -> [StatisticModel] {
         
         let marketCap: StatisticModel = .init(title: "Market Cap", value: self.marketCap, percentageChange: self.marketCapChangePercentage24HUsd)
         let volume: StatisticModel = .init(title: "24h Volume", value: self.volume)
         let btcDominance: StatisticModel = .init(title: "BTC Dominance", value: self.btcDominance)
-        let portfolio: StatisticModel = .init(title: "Portfolio Value", value: "$0.00", percentageChange: 0)
+        
+        let sumOfCurrentPortfolioValues = portfolioCoins.map{ $0.currentHoldingsValue }.reduce(0.0, +)
+        let sumOfPrevPortfolioValues = portfolioCoins.reduce(into: 0.0) { prevResult, coin in
+            let currentValue = coin.currentHoldingsValue
+            let percentChange = (coin.priceChangePercentage24H ?? 0) / 100
+            prevResult += currentValue / (1 + percentChange)
+        }
+        let percentageChange = ((sumOfCurrentPortfolioValues - sumOfPrevPortfolioValues) / sumOfPrevPortfolioValues) * 100
+        
+        let portfolio: StatisticModel = .init(title: "Portfolio Value", value: sumOfCurrentPortfolioValues.asCurrencyDecimals2, percentageChange: percentageChange)
         return [marketCap, volume, btcDominance, portfolio]
+        
     }
     
 }

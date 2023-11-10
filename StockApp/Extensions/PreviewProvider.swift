@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 extension PreviewProvider {
     
@@ -21,9 +22,20 @@ class DeveloperPreview {
     
     static let instance = DeveloperPreview()
     
-    private init() {}
+    private let container: ModelContainer
     
-    let homeViewModel = HomeViewModel()
+    private init() {
+        
+        do {
+            container = try ModelContainer(for: PortfolioEntity.self)
+            homeViewModel = HomeViewModel(modelContext: .init(container))
+        } catch {
+            fatalError("Failed to create ModelContainer for Portfolio.")
+        }
+        
+    }
+    
+    let homeViewModel: HomeViewModel
     
     let coin = CoinModel(
        id: "bitcoin",

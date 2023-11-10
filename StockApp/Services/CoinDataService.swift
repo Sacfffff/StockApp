@@ -60,10 +60,9 @@ class CoinDataService {
     private func modelsDidLoad(coins: [CoinModel]? = nil, error: Error? = nil, isLocalModels: Bool = false) {
         
         if let error {
-            allCoins = []
             self.error = error
         } else if let coins {
-            allCoins = coins
+            allCoins.merge(newModel: coins)
             page = isLocalModels ? page : page + 1
             hasMoreResults = !coins.isEmpty && !isLocalModels
         }
@@ -82,8 +81,11 @@ extension CoinDataService {
     }
     
     
-    func performUpdate() {
+    func performUpdate(forceReload: Bool = false) {
         
+        if forceReload {
+            page = 1
+        }
         error = nil
         allCoins = []
         hasMoreResults = true
@@ -91,4 +93,17 @@ extension CoinDataService {
         
     }
     
+}
+
+fileprivate extension Array where Element == CoinModel {
+    
+    mutating func merge(newModel: [CoinModel]) {
+        
+        self.append(contentsOf: newModel.reduce(into: []) { partialResult, coin in
+            if !self.contains(where: { coin.id == $0.id }) {
+                partialResult.append(coin)
+            }
+        })
+        
+    }
 }
