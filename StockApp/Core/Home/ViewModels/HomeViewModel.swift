@@ -23,6 +23,8 @@ class HomeViewModel: ObservableObject {
     
     @Published var savedPortfolios: [CoinModel] = []
     
+    @Published var sortOption: SortOption = .holdings
+    
     private let portfolioDataService: PortfolioDataService
     
     private var cancelBag: Set<AnyCancellable> = []
@@ -41,9 +43,13 @@ class HomeViewModel: ObservableObject {
     private func setup() {
         
         coinDataService.$allCoins
+            .combineLatest($sortOption)
+            .map { coins, sortOption in
+                return coins.sortedCoins(by: sortOption)
+            }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.updateState()
+            .sink { [weak self] coins in
+                self?.updateState(newCoins: coins)
             }
             .store(in: &cancelBag)
         
@@ -74,13 +80,16 @@ class HomeViewModel: ObservableObject {
         
         $allCoins
             .combineLatest(portfolioDataService.$portfolioEntities, $filteredCoins)
-            .map{ allCoins, portfolioEntities, filteredCoins in
+            .map{ [weak self] allCoins, portfolioEntities, filteredCoins in
+                var result: [CoinModel] = []
                 if !filteredCoins.isEmpty {
-                    return filteredCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
+                    result = filteredCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
                 } else {
-                    return allCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
+                    result = allCoins.getCoinModelsFilteredAndUpdated(by: portfolioEntities)
                 }
+                return self?.sortPortfolioCoinsIfNeeded(portfolioCoins: result) ?? []
             }
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] savedPortfolios in
                 self?.savedPortfolios = savedPortfolios
             }
@@ -97,12 +106,12 @@ class HomeViewModel: ObservableObject {
     }
     
     
-    private func updateState() {
+    private func updateState(newCoins: [CoinModel] = []) {
         
-        if coinDataService.allCoins.isEmpty {
+        if newCoins.isEmpty {
             paginationState = updatePaginationState()
         } else {
-            allCoins = coinDataService.allCoins
+            allCoins = newCoins
             paginationState = updatePaginationState()
         }
         
@@ -118,6 +127,20 @@ class HomeViewModel: ObservableObject {
             print(error.localizedDescription)
         } else if coinDataService.hasMoreResults == false {
             result = .idle
+        }
+        
+        return result
+        
+    }
+    
+    
+    private func sortPortfolioCoinsIfNeeded(portfolioCoins: [CoinModel]) -> [CoinModel] {
+        
+        var result = portfolioCoins
+        if sortOption == .holdings {
+            result.sort(by: { $0.currentHoldingsValue > $1.currentHoldingsValue })
+        } else if sortOption == .holdingsReverse {
+            result.sort(by: { $0.currentHoldingsValue < $1.currentHoldingsValue })
         }
         
         return result
@@ -170,6 +193,18 @@ extension HomeViewModel {
         
     }
     
+    
+    enum SortOption {
+        
+        case rank
+        case rankReverced
+        case holdings
+        case holdingsReverse
+        case price
+        case priceReversed
+        
+    }
+    
 }
 
 
@@ -191,6 +226,22 @@ fileprivate extension Array where Element == CoinModel {
                 partialResult.append(model.updateHoldings(amount: entity.amount))
             }
         })
+        
+    }
+    
+    
+    func sortedCoins(by sortOption: HomeViewModel.SortOption) -> [CoinModel] {
+        
+       return switch sortOption {
+           case .rank, .holdings:
+               self.sorted(by: { $0.rank < $1.rank })
+           case .rankReverced, .holdingsReverse:
+               self.sorted(by: { $0.rank > $1.rank })
+            case .price:
+               self.sorted(by: { ($0.currentPrice ?? 0.0) < ($1.currentPrice ?? 0.0) })
+           case .priceReversed:
+               self.sorted(by: { ($0.currentPrice ?? 0.0) > ($1.currentPrice ?? 0.0) })
+        }
         
     }
     

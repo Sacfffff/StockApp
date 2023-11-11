@@ -52,6 +52,7 @@ private extension CoinImageService {
                 return UIImage(data: data)
             })
             .replaceError(with: nil)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] image in
                 if let self, let image {
                     self.image = image
