@@ -96,12 +96,18 @@ private extension HomeView {
         
         List {
             ForEach(viewModel.searchText.isEmpty ? viewModel.allCoins : viewModel.filteredCoins) { coin in
-                CoinRowView(coin: coin, showHoldingsColumn: false)
-                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+                    CoinRowView(coin: coin, showHoldingsColumn: false)
+                        .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .background(
+                            NavigationLink(value: coin) { EmptyView() }.opacity(0.0)
+                        )
             }
             if viewModel.hasMoreResults, viewModel.searchText.isEmpty {
                 PaginationRowView()
             }
+        }
+        .navigationDestination(for: CoinModel.self) { coin in
+            DetailView(coin: coin)
         }
         .scrollIndicators(.hidden)
         .listStyle(.plain)
@@ -113,8 +119,14 @@ private extension HomeView {
         List {
             ForEach(viewModel.savedPortfolios) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: true)
-                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+                    .background(
+                        NavigationLink(value: coin) { EmptyView() }.opacity(0.0)
+                    )
             }
+        }
+        .navigationDestination(for: CoinModel.self) { coin in
+            DetailView(coin: coin)
         }
         .scrollIndicators(.hidden)
         .listStyle(.plain)

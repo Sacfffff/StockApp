@@ -84,3 +84,23 @@ extension CoinModel {
     }
     
 }
+
+
+extension CoinModel: Hashable {
+    
+    static func == (lhs: CoinModel, rhs: CoinModel) -> Bool {
+        
+        return lhs.id == rhs.id && lhs.symbol == rhs.symbol && lhs.name == rhs.name
+        
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(self.id)
+        hasher.combine(self.symbol)
+        hasher.combine(self.name)
+        
+       }
+    
+}
