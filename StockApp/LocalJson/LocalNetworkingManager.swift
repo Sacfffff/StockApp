@@ -16,13 +16,13 @@ class LocalNetworkingManager {
     private init() {}
     
     
-    private func filePath(for name: FileName) -> URL? {
+    private func filePath(for name: String) -> URL? {
         
         createFolderIfNeeded()
         
         guard let urlForFolder else { return nil }
         
-        return urlForFolder.appendingPathComponent(name.rawValue)
+        return urlForFolder.appendingPathComponent(name)
         
     }
     
@@ -51,9 +51,9 @@ class LocalNetworkingManager {
 
 extension LocalNetworkingManager {
     
-    func read<T: Codable>(from fileName: FileName) -> T? {
+    func read<T: Codable>(from type: FileName) -> T? {
 
-        if let filePath = filePath(for: fileName), let data = try? Data(contentsOf: filePath) {
+        if let filePath = filePath(for: type.fileName), let data = try? Data(contentsOf: filePath) {
             return try? JSONDecoder().decode(T.self, from: data)
         }
 
@@ -62,9 +62,9 @@ extension LocalNetworkingManager {
     }
     
     
-    func write<T: Codable>(data: T, to fileName: FileName) {
+    func write<T: Codable>(data: T, to type: FileName) {
         
-        if let filePath = filePath(for: fileName) {
+        if let filePath = filePath(for: type.fileName) {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             do {
@@ -80,10 +80,22 @@ extension LocalNetworkingManager {
 
 extension LocalNetworkingManager {
     
-    enum FileName: String {
+    enum FileName {
         
-        case coinModels = "coinModels"
-        case marketData = "marketData"
+        case coinModels
+        case marketData
+        case custom(fileName: String)
+        
+        var fileName: String {
+            
+            return switch self {
+                case .custom(fileName: let name):
+                    name
+                default:
+                    "\(self)"
+            }
+            
+        }
         
     }
     

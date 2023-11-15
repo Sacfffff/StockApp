@@ -44,9 +44,7 @@ class HomeViewModel: ObservableObject {
         
         coinDataService.$allCoins
             .combineLatest($sortOption)
-            .map { coins, sortOption in
-                return coins.sortedCoins(by: sortOption)
-            }
+            .map { return $0.sortedCoins(by: $1) }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] coins in
                 self?.updateState(newCoins: coins)
