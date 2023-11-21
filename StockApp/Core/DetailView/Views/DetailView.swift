@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailView: View {
     
     @StateObject private var viewModel: DetailViewModel
+    @State private var showFullDescription: Bool = false
     
     private let columns: [GridItem] = [
         GridItem(.flexible()),
@@ -36,15 +37,20 @@ struct DetailView: View {
                     Divider()
                     overviewGrid
                     
+                    descriptionSection
+                    
                     additionalTitle
                     Divider()
                     additionalGrid
+                    
+                    Divider()
+                    websiteSection
                     
                 }
                 .padding()
             }
             
-          
+            
         }
         .navigationTitle(viewModel.coin.name)
         .toolbar {
@@ -115,6 +121,53 @@ private extension DetailView {
                 .frame(width: 25, height: 25)
             
         }
+        
+    }
+    
+    var descriptionSection: some View {
+        
+        ZStack {
+            if let description = viewModel.coinDescription?.description, !description.isEmpty {
+                VStack(alignment: .leading) {
+                    Text(description)
+                        .lineLimit(showFullDescription ? nil : 3)
+                        .font(.callout)
+                        .foregroundStyle(Color.theme.secondaryText)
+                    
+                    Button(action: {
+                        showFullDescription.toggle()
+                    }, label: {
+                        Text(showFullDescription ? "Hide" : "Show more...")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .padding(.vertical, 4)
+                    })
+                    .tint(.blue)
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            }
+        }
+        
+    }
+    
+    var websiteSection: some View {
+        
+        HStack {
+            if let websiteString = viewModel.coinDescription?.websiteUrl, let websiteUrl = URL(string: websiteString) {
+                Link("Website", destination: websiteUrl)
+            }
+            
+            Spacer()
+            
+            if let redditString = viewModel.coinDescription?.redditUrl, let redditUrl = URL(string: redditString) {
+                Link("Reddit", destination: redditUrl)
+            }
+        }
+        .tint(.blue)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(.headline)
         
     }
     

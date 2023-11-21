@@ -13,6 +13,7 @@ class DetailViewModel: ObservableObject {
     @Published var overviewStatistics: [StatisticModel] = []
     @Published var additionalStatistics: [StatisticModel] = []
     @Published var coin: CoinModel
+    @Published var coinDescription: CoinDescription? = nil
     
     private let coinDetailService: CoinDetailDataService
     private var cancelBag: Set<AnyCancellable> = []
@@ -36,6 +37,13 @@ class DetailViewModel: ObservableObject {
             .sink { [weak self] overview, additional in
                 self?.overviewStatistics = overview
                 self?.additionalStatistics = additional
+            }
+            .store(in: &cancelBag)
+        
+        coinDetailService.$coinDetail
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] coinDetail in
+                self?.coinDescription = .init(description: coinDetail?.readableDescription, websiteUrl: coinDetail?.links?.homepage?.first, redditUrl: coinDetail?.links?.subredditURL)
             }
             .store(in: &cancelBag)
         
@@ -86,6 +94,18 @@ fileprivate extension CoinModel {
                                         value: "$\(self.totalVolume?.withAbbreviations ?? "")")
         
         return [pricePercentStat, marketCapStat, rankStat, volumeStat]
+        
+    }
+    
+}
+
+extension DetailViewModel {
+    
+    struct CoinDescription {
+        
+        let description: String?
+        let websiteUrl: String?
+        let redditUrl: String?
         
     }
     
