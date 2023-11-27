@@ -23,7 +23,8 @@ struct PaginationRowView: View {
                     ErrorView()
             }
         }
-        .listRowSeparatorTint(.clear)
+        .listRowBackground(Color.theme.background)
+        .listRowSeparatorTint(Color.theme.background)
         .frame(height: 50)
         .frame(maxWidth: .infinity)
         .onAppear {

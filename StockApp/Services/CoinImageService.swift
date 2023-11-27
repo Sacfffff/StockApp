@@ -56,8 +56,8 @@ private extension CoinImageService {
             .sink(receiveValue: { [weak self] image in
                 if let self, let image {
                     self.image = image
-                    self.imageSubscription?.cancel()
                     self.fileManager.saveImage(image: image, imageName: self.imageName, folderName: self.folderName)
+                    self.imageSubscription?.cancel()
                 }
             })
         

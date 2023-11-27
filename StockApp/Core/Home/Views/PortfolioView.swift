@@ -39,6 +39,7 @@ struct PortfolioView: View {
             }
                 
             }
+            .background(Color.theme.background.ignoresSafeArea())
             .navigationTitle("Edit Portfolio")
             .onChange(of: viewModel.searchText) {
                 if viewModel.searchText == "" {

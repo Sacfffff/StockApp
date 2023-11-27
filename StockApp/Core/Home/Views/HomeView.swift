@@ -19,10 +19,6 @@ struct HomeView: View {
         
         ZStack {
             Color.theme.background.ignoresSafeArea()
-                .sheet(isPresented: $showPortfolioSheet) {
-                    PortfolioView()
-                        .environmentObject(viewModel)
-                }
             
             
             VStack {
@@ -36,14 +32,24 @@ struct HomeView: View {
                     coinsList
                         .transition(.move(edge: .leading))
                 } else {
-                    portfolioCoinsList
-                        .transition(.move(edge: .trailing))
+                    ZStack(alignment: .top) {
+                        if viewModel.savedPortfolios.isEmpty && viewModel.searchText.isEmpty {
+                            portfolioEmptyText
+                        } else {
+                            portfolioCoinsList
+                        }
+                    }
+                    .transition(.move(edge: .trailing))
                 }
                 
                 Spacer(minLength: 0)
             }
             .sheet(isPresented: $showSettingView) {
                 SettingsView()
+            }
+            .sheet(isPresented: $showPortfolioSheet) {
+                PortfolioView()
+                    .environmentObject(viewModel)
             }
             
         }
@@ -112,10 +118,12 @@ private extension HomeView {
                 PaginationRowView()
             }
         }
+        .id(UUID())
         .navigationDestination(for: CoinModel.self) { coin in
             DetailView(coin: coin)
         }
         .scrollIndicators(.hidden)
+        .scrollContentBackground(.hidden)
         .listStyle(.plain)
         
     }
@@ -131,14 +139,27 @@ private extension HomeView {
                     )
             }
         }
+        .id(UUID())
         .navigationDestination(for: CoinModel.self) { coin in
             DetailView(coin: coin)
         }
         .scrollIndicators(.hidden)
+        .scrollContentBackground(.hidden)
         .listStyle(.plain)
         .refreshable {
             viewModel.reloadData()
         }
+        
+    }
+    
+    var portfolioEmptyText: some View {
+        
+        Text("You haven`t added any coins to your portfolio. Click the + button to get started! 🧐")
+            .font(.callout)
+            .foregroundStyle(Color.theme.tint)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .padding(50)
         
     }
     

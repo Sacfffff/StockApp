@@ -32,6 +32,7 @@ struct CoinRowView: View {
         .alignmentGuide(.listRowSeparatorTrailing) { viewDimension in
             return viewDimension[.trailing] - 8
         }
+        .listRowBackground(Color.theme.background)
     }
 }
 

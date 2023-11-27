@@ -14,19 +14,25 @@ struct SettingsView: View {
     let personalUrl = URL(string: "https://github.com/Sacfffff")
     
     var body: some View {
-       
+        
         NavigationStack {
-            
-            List {
-                coingeckoSection
-                developerSection
-                applicationSection
-            }
-            .listStyle(.grouped)
-            .navigationTitle("Settings")
-            .toolbar{
-                ToolbarItem(placement: .topBarTrailing) {
-                    XMarkButton()
+            ZStack {
+                Color.theme.background.ignoresSafeArea()
+                List {
+                    coingeckoSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                    developerSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                    applicationSection
+                        .listRowBackground(Color.theme.background.opacity(0.5))
+                }
+                .scrollContentBackground(.hidden)
+                .listStyle(.grouped)
+                .navigationTitle("Settings")
+                .toolbar{
+                    ToolbarItem(placement: .topBarTrailing) {
+                        XMarkButton()
+                    }
                 }
             }
             

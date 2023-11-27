@@ -52,6 +52,7 @@ struct DetailView: View {
             
             
         }
+        .background(Color.theme.background.ignoresSafeArea())
         .navigationTitle(viewModel.coin.name)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
