@@ -95,7 +95,7 @@ private extension HomeView {
             CircleButtonView(iconName: "chevron.right")
                 .rotationEffect(.degrees(showPortfolio ? 180 : 0))
                 .onTapGesture {
-                    withAnimation(.spring()) {
+                    withAnimation(.smooth(duration: 0.3)) {
                         showPortfolio.toggle()
                     }
                 }
