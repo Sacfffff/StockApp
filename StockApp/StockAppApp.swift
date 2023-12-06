@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 @main
 struct StockAppApp: App {
@@ -50,6 +51,9 @@ struct StockAppApp: App {
                 }
                 .zIndex(2.0)
                 
+            }
+            .task {
+                try? Tips.configure([.datastoreLocation(.applicationDefault), .displayFrequency(.immediate)])
             }
             
         }

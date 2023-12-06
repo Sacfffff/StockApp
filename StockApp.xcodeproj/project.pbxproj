@@ -29,6 +29,8 @@
 		7585989F2B034CAC002DE2CA /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7585989E2B034CAC002DE2CA /* DetailViewModel.swift */; };
 		758598A12B034CED002DE2CA /* CoinDetailDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758598A02B034CED002DE2CA /* CoinDetailDataService.swift */; };
 		758E8A2A2B0DC435009F3835 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758E8A292B0DC435009F3835 /* SettingsView.swift */; };
+		759356B02B20B10900AA0119 /* TooltipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759356AF2B20B10900AA0119 /* TooltipManager.swift */; };
+		759356B22B20B1C900AA0119 /* Tooltips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759356B12B20B1C900AA0119 /* Tooltips.swift */; };
 		759CAA212AF4C12900BE97B5 /* MarketDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759CAA202AF4C12900BE97B5 /* MarketDataModel.swift */; };
 		759CAA232AF4C26400BE97B5 /* MarketDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759CAA222AF4C26400BE97B5 /* MarketDataService.swift */; };
 		75A412B82AE8FB140003E6CC /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A412B72AE8FB140003E6CC /* CoinDataService.swift */; };
@@ -75,6 +77,8 @@
 		7585989E2B034CAC002DE2CA /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		758598A02B034CED002DE2CA /* CoinDetailDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailDataService.swift; sourceTree = "<group>"; };
 		758E8A292B0DC435009F3835 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		759356AF2B20B10900AA0119 /* TooltipManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipManager.swift; sourceTree = "<group>"; };
+		759356B12B20B1C900AA0119 /* Tooltips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tooltips.swift; sourceTree = "<group>"; };
 		759CAA202AF4C12900BE97B5 /* MarketDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataModel.swift; sourceTree = "<group>"; };
 		759CAA222AF4C26400BE97B5 /* MarketDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataService.swift; sourceTree = "<group>"; };
 		75A412B72AE8FB140003E6CC /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
@@ -204,6 +208,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		759356AC2B20AF7500AA0119 /* ToolTip */ = {
+			isa = PBXGroup;
+			children = (
+				759356AF2B20B10900AA0119 /* TooltipManager.swift */,
+				759356B12B20B1C900AA0119 /* Tooltips.swift */,
+			);
+			path = ToolTip;
+			sourceTree = "<group>";
+		};
 		75A412B62AE8FAE50003E6CC /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +285,7 @@
 		75E4F9392AE10073002A59FF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				759356AC2B20AF7500AA0119 /* ToolTip */,
 				75E4F93F2AE10217002A59FF /* Components */,
 				752819732B0F2967004B6724 /* Launch */,
 				75E4F93A2AE1008B002A59FF /* Home */,
@@ -420,6 +434,7 @@
 				75E4F93E2AE100D4002A59FF /* HomeView.swift in Sources */,
 				75E4F9252ADFBD4B002A59FF /* StockAppApp.swift in Sources */,
 				75D0D8302AF5354300CA3F14 /* XMarkButton.swift in Sources */,
+				759356B02B20B10900AA0119 /* TooltipManager.swift in Sources */,
 				75E4F9442AE10959002A59FF /* CircleButtonAnimationView.swift in Sources */,
 				751531602AF0D546008CDDF5 /* SearchBarView.swift in Sources */,
 				755A150E2AE7988300A630CB /* HomeViewModel.swift in Sources */,
@@ -455,6 +470,7 @@
 				75D8875F2B0B3BFE00502E2A /* Date.swift in Sources */,
 				759CAA212AF4C12900BE97B5 /* MarketDataModel.swift in Sources */,
 				75530F162AEA3DD4008C7724 /* NetworkingManager.swift in Sources */,
+				759356B22B20B1C900AA0119 /* Tooltips.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

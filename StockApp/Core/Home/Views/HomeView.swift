@@ -15,6 +15,8 @@ struct HomeView: View {
     @State private var showPortfolioSheet: Bool = false
     @State private var showSettingView: Bool = false
     
+    private let gotToProfileTip = GoToProfileToolTip()
+    
     var body: some View {
         
         ZStack {
@@ -85,6 +87,7 @@ private extension HomeView {
                 .background(
                     CircleButtonAnimationView(animate: $showPortfolio)
                 )
+            
             Spacer()
             Text(showPortfolio ? "Portfolio" : "Live Prices")
                 .font(.headline)
@@ -95,10 +98,12 @@ private extension HomeView {
             CircleButtonView(iconName: "chevron.right")
                 .rotationEffect(.degrees(showPortfolio ? 180 : 0))
                 .onTapGesture {
+                    //gotToProfileTip.invalidate(reason: .actionPerformed)
                     withAnimation(.smooth(duration: 0.3)) {
                         showPortfolio.toggle()
                     }
                 }
+                .popoverTip(gotToProfileTip, arrowEdge: .top)
         }
         .padding(.horizontal)
         

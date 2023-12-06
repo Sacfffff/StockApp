@@ -56,6 +56,9 @@ struct LaunchView: View {
                     loops += 1
                     if loops >= 2 {
                         showLaunchView = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            GoToProfileToolTip.needToShow = true
+                        }
                     }
                 } else {
                     counter += 1
