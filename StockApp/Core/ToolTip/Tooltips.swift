@@ -34,9 +34,6 @@ struct GoToProfileToolTip: Tip {
     
     var rules: [Rule] {
         
-//        #Rule(Self.needToShow) { event in
-//            event.donations.count == 0
-//        }
         #Rule(Self.$needToShow) { $0 == true }
         
     }
