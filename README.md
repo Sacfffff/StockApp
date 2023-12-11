@@ -8,6 +8,7 @@ Full featured IOS App showcasing Crypto API.
 - Local JSONManager;
 - Local Image cache;
 - Using Swift Data;
+- Using TipKit;
 <img width="963" alt="Screenshot 2023-11-30 at 15 15 38" src="https://github.com/Sacfffff/StockApp/assets/92031937/f9d9af6e-e13f-406c-9b15-74729c87dd94">
 <img width="969" alt="Screenshot 2023-11-30 at 15 15 47" src="https://github.com/Sacfffff/StockApp/assets/92031937/3889cf72-2a75-4c16-93cb-dc5cc00bfbeb">
 <img width="981" alt="Screenshot 2023-12-06 at 17 52 11" src="https://github.com/Sacfffff/StockApp/assets/92031937/5383d074-f343-406c-8a80-956d97583106">
